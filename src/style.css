@@ -27,6 +27,6 @@ button {
     cursor: pointer;
 }
 
-input, textarea, select {
+input, textarea {
     cursor: text;
 }

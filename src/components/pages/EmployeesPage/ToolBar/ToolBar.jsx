@@ -5,9 +5,10 @@ import Input from "../../../UI/Input/Input";
 import search_icon from './img/search_icon.svg';
 import add_employee_icon from './img/add_employee.svg';
 import save_employee_icon from './img/save_employee.svg';
+import AddingUser from "../AddingUser/AddingUser";
 
 const ToolBar = (props) => {
-    const [isSavedEmployee, setIsSavedEmployee] = React.useState(false);
+    const [isSavedEmployee, setIsSavedEmployee] = React.useState(true);
 
     const data = useSelector(state => state.data);
     const dispatch = useDispatch();
@@ -16,23 +17,30 @@ const ToolBar = (props) => {
         console.log(input.value);
     }
 
-    const handleAddAndSaveEmployee = (e) => {
+    const handleAddUser = (e) => {
+        setIsSavedEmployee(!isSavedEmployee);
+    }
+
+    const handleSaveUser = (e) => {
         setIsSavedEmployee(!isSavedEmployee);
     }
 
     return (
-        <div className={style.toolBar}>
-            <Input placeholder="Найти пользователя..."
-                   buttonIcon={search_icon}
-                   inputStyle={{fontSize: '1em'}}
-                   buttonIconOnClick={findEmployee}/>
-            <div className={style.newUser}>
-                <b>Пользователи</b>
-                <button onClick={handleAddAndSaveEmployee}>
-                    <img src={isSavedEmployee ? save_employee_icon : add_employee_icon} alt=""/>
-                </button>
+        <>
+            <div className={style.toolBar}>
+                <Input placeholder="Найти пользователя..."
+                       buttonIcon={search_icon}
+                       inputStyle={{fontSize: '1em'}}
+                       buttonIconOnClick={findEmployee}/>
+                <div className={style.newUser}>
+                    <b>Пользователи</b>
+                    <button onClick={isSavedEmployee ? handleSaveUser : handleAddUser}>
+                        <img src={isSavedEmployee ? save_employee_icon : add_employee_icon} alt=""/>
+                    </button>
+                </div>
             </div>
-        </div>
+            {isSavedEmployee && <AddingUser/>}
+        </>
     );
 }
 

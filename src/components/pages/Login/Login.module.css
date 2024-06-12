@@ -48,6 +48,10 @@
 }
 
 @media screen and (max-width: 551px) {
+    .loginContainer {
+        transform: translate(-50%, 2em);
+    }
+
     .login {
         --padding: 1.5em;
     }
