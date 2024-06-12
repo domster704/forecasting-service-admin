@@ -1,13 +1,24 @@
 import React from 'react';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import * as style from './Header.module.css'
 import headerLogo from './img/logo.png';
 import exitSvg from './img/exit.svg';
 import Wrapper from "../UI/Wrapper/Wrapper";
+import {setLogin} from "../../store/userSlice";
+import {useNavigate} from "react-router-dom";
+import {LOGIN_PAGE_URL} from "../../constants";
 
 const Header = (props) => {
     const userStore = useSelector(state => state.user);
-    console.log(userStore)
+    const dispatch = useDispatch();
+
+    const navigate = useNavigate();
+
+    const logout = () => {
+        dispatch(setLogin(false))
+        localStorage.clear();
+        navigate(LOGIN_PAGE_URL);
+    }
 
     return (
         <header className={style.headerContainer}>
@@ -16,7 +27,7 @@ const Header = (props) => {
                     <img className={!userStore.isLogin && style.isOnlyLogo || ""} src={headerLogo} alt="logo"/>
                     {userStore.isLogin && <div className={style.user}>
                         <p>{userStore.name}</p>
-                        <button>
+                        <button onClick={logout}>
                             <img src={exitSvg} alt="exit"/>
                         </button>
                     </div>}

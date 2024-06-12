@@ -18,6 +18,8 @@ const App = () => {
         const isLogin = localStorage.getItem("isLogin");
         if (!isLogin) {
             navigate(LOGIN_PAGE_URL);
+        } else if (isLogin) {
+            navigate(EMPLOYEES_PAGE_URL);
         }
     }, [location.pathname]);
 

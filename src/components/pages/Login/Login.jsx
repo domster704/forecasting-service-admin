@@ -4,6 +4,7 @@ import * as style from './Login.module.css'
 import Input from "../../UI/Input/Input";
 import {useNavigate} from "react-router-dom";
 import {EMPLOYEES_PAGE_URL} from "../../../constants";
+import {setLogin} from "../../../store/userSlice";
 
 const Login = (props) => {
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Login = (props) => {
             });
         e.target.reset();
 
-
+        dispatch(setLogin(true))
         localStorage.setItem('isLogin', 'true');
         navigate(EMPLOYEES_PAGE_URL);
     }
