@@ -14,10 +14,13 @@
 }
 
 .inputBlock {
+    display: flex;
+    align-items: center;
+
     border: 1px solid #b3b3b3;
     border-radius: 0.7em;
 
-    padding: 1.25em 1em;
+    padding: 1em;
 
     cursor: text;
     background: #fff;
@@ -31,11 +34,13 @@
     color: #737373;
 }
 
-@media screen and (max-width: 551px) {
-    .inputBlock {
-        padding: 1em;
-    }
+.inputBlock button img {
+    width: 1.5em;
+    aspect-ratio: 1/1;
+    height: auto;
+}
 
+@media screen and (max-width: 551px) {
     .inputBlock input {
         font-size: 0.75rem;
     }

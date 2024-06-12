@@ -3,12 +3,15 @@ import {useDispatch, useSelector} from "react-redux";
 import * as style from './Input.module.css'
 
 const Input = ({
-                   button = null,
+                   buttonIcon = null,
+                   buttonIconOnClick = (e, input) => {
+                   },
                    placeholder = "",
                    label = "",
                    required = false,
                    type = "text",
                    name = "",
+                   inputStyle = {},
                    onChange = (e) => {
                    },
                }) => {
@@ -37,10 +40,13 @@ const Input = ({
                        value={value}
                        type={type}
                        name={name}
+                       style={inputStyle}
                        onChange={handleChange}/>
-                {button && <button>
-                    <img src={button} alt={button}/>
-                </button>}
+                {buttonIcon &&
+                    <button onClick={(e) => buttonIconOnClick(e, inputRef.current)}>
+                        <img src={buttonIcon} alt={buttonIcon}/>
+                    </button>
+                }
             </div>
         </div>
 

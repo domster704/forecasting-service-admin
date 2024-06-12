@@ -6,13 +6,19 @@ import Login from "./components/pages/Login/Login";
 import EmployeesPage from "./components/pages/EmployeesPage/EmployeesPage";
 import {EMPLOYEES_PAGE_URL, LOGIN_PAGE_URL} from "./constants";
 import Wrapper from "./components/UI/Wrapper/Wrapper";
+import {setLogin} from "./store/userSlice";
 
 const App = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const user = useSelector(state => state.user);
+    const userStore = useSelector(state => state.user);
     const dispatch = useDispatch();
+
+    React.useEffect(() => {
+        const isLogin = localStorage.getItem("isLogin");
+        isLogin && dispatch(setLogin(true));
+    }, [])
 
     React.useEffect(() => {
         const isLogin = localStorage.getItem("isLogin");
