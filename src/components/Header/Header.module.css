@@ -1,8 +1,11 @@
+.headerContainer {
+    padding: 1em 0;
+    background: #fff;
+}
+
 .header {
     display: flex;
     justify-content: space-between;
-    padding: 1em 10em;
-    background: #fff;
     align-items: center;
 }
 
@@ -33,7 +36,7 @@
 
 @media screen and (max-width: 551px) {
     .header {
-        padding: 0.75em 1em;
+        padding: 0.75em 0;
     }
 
     .header img {

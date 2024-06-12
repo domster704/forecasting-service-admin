@@ -1,15 +1,36 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import Input from "./components/UI/Input/Input";
+import Header from "./components/Header/Header";
+import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
+import Login from "./components/pages/Login/Login";
+import EmployeesPage from "./components/pages/EmployeesPage/EmployeesPage";
+import {EMPLOYEES_PAGE_URL, LOGIN_PAGE_URL} from "./constants";
+import Wrapper from "./components/UI/Wrapper/Wrapper";
 
 const App = () => {
-    const data = useSelector(state => state.data);
-    const dispatch = useDispatch()
-    console.log(data)
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const user = useSelector(state => state.user);
+    const dispatch = useDispatch();
+
+    React.useEffect(() => {
+        const isLogin = localStorage.getItem("isLogin");
+        if (!isLogin) {
+            navigate(LOGIN_PAGE_URL);
+        }
+    }, [location.pathname]);
+
     return (
-        <div>
-            <Input placeholder={"Найти пользователя..."}/>
-        </div>
+        <>
+            <Header/>
+            <Wrapper>
+                <Routes>
+                    <Route path={LOGIN_PAGE_URL} element={<Login/>}/>
+                    <Route path={EMPLOYEES_PAGE_URL} element={<EmployeesPage/>}/>
+                </Routes>
+            </Wrapper>
+        </>
     );
 }
 
