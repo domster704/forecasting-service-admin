@@ -1,0 +1,42 @@
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.inputContainer label {
+    font-size: 0.88rem;
+    color: #000;
+}
+
+.inputContainer .required {
+    color: #b12725;
+}
+
+.inputBlock {
+    border: 1px solid #b3b3b3;
+    border-radius: 0.7em;
+
+    padding: 1.25em 1em;
+
+    cursor: text;
+    background: #fff;
+}
+
+.inputBlock input {
+    min-width: 20em;
+
+    font-weight: 400;
+    font-size: 0.88rem;
+    color: #737373;
+}
+
+@media screen and (max-width: 551px) {
+    .inputBlock {
+        padding: 1em;
+    }
+
+    .inputBlock input {
+        font-size: 0.75rem;
+    }
+}

@@ -50,6 +50,6 @@ module.exports = {
             directory: path.join(__dirname, "build"),
         },
         compress: true,
-        port: 9001
+        port: 9002
     }
 }

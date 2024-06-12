@@ -1,12 +1,14 @@
 import React from 'react';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import Input from "./components/UI/Input/Input";
 
 const App = () => {
     const data = useSelector(state => state.data);
+    const dispatch = useDispatch()
     console.log(data)
     return (
         <div>
-            <h1>{data.text}</h1>
+            <Input placeholder={"Найти пользователя..."}/>
         </div>
     );
 }
