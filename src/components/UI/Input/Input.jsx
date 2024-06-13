@@ -31,22 +31,27 @@ const Input = ({
             {label && <label>{label}
                 {required && <span className={style.required}>*</span>}
             </label>}
-            <div className={style.inputBlock} onClick={() => {
-                inputRef?.current?.focus();
-            }}>
-                <input ref={inputRef}
-                       placeholder={placeholder}
-                       required={required}
-                       value={value}
-                       type={type}
-                       name={name}
-                       style={inputStyle}
-                       onChange={handleChange}/>
-                {buttonIcon &&
-                    <button onClick={(e) => buttonIconOnClick(e, inputRef.current)}>
-                        <img src={buttonIcon} alt={buttonIcon}/>
-                    </button>
-                }
+            <div>
+                <div className={style.inputBlock} onClick={() => {
+                    inputRef?.current?.focus();
+                }}>
+                    <input ref={inputRef}
+                           placeholder={placeholder}
+                           required={required}
+                           value={value}
+                           type={type}
+                           name={name}
+                           style={inputStyle}
+                           onChange={handleChange}/>
+                    {buttonIcon &&
+                        <button className={style.buttonIcon}
+                                onClick={(e) => buttonIconOnClick(e, inputRef.current)}
+                                type={'button'}>
+                            <img src={buttonIcon} alt={buttonIcon}/>
+                        </button>
+                    }
+                </div>
+                <p className={style.requiredFiledMessage}>Заполните обязательное поле</p>
             </div>
         </div>
     );

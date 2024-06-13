@@ -1,6 +1,6 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import * as style from './Select.module.css'
+import * as style from '../Input/Input.module.css'
 import dropdownIcon from './img/dropdown.svg'
 
 /**
@@ -12,6 +12,7 @@ import dropdownIcon from './img/dropdown.svg'
  * @param selectStyle
  * @param onChange
  * @param {Array.<{value: string, label: string}>} options
+ * @param small
  * @param {JSX.Element} block
  * @constructor
  */
@@ -24,7 +25,7 @@ const Select = ({
                     onChange = (e) => {
                     },
                     options = [],
-                    block = null
+                    block = null,
                 }) => {
     const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
     const [optionLabel, setOptionLabel] = React.useState("");
@@ -33,6 +34,8 @@ const Select = ({
     const selectRef = React.useRef(null);
     const data = useSelector(state => state.data);
     const dispatch = useDispatch();
+
+    const isShowDropDown = isDropdownOpen && (block !== null || options.length > 0);
 
     const showDropdown = (e) => {
         setIsDropdownOpen(!isDropdownOpen);
@@ -47,44 +50,50 @@ const Select = ({
         e.preventDefault();
         setOptionLabel(option.label);
         setOptionValue(option.value);
+        console.log(option)
     }
 
     return (
-        <div className={style.selectContainer}>
+        <div className={style.inputContainer}>
             {label &&
                 <label>{label}
                     {required && <span className={style.required}>*</span>}
                 </label>
             }
-            <div className={`${style.selectBlock} ${isDropdownOpen && style.selectBlockOpen}`} onClick={() => {
-                showDropdown()
-            }}>
-                <input ref={selectRef}
-                       placeholder={placeholder}
-                       required={required}
-                       value={optionLabel}
-                       name={name}
-                       style={selectStyle}
-                       data-options-value={optionValue}
-                       onChange={(e) => {
-                           setOptionLabel(e.target.value)
-                       }}/>
-                <button>
-                    <img src={dropdownIcon} alt={dropdownIcon}/>
-                </button>
-                {
-                    isDropdownOpen && (block !== null || options.length > 0) &&
-                    <div className={style.dropdown}>
-                        {
-                            block === null && options.length > 0 &&
-                            options.map((option, index) => {
-                                return <button key={index}
-                                               onClick={(e) => choseDropdownOptions(e, option)}
-                                >{option.label}</button>
-                            })
-                        }
-                    </div>
-                }
+            <div>
+                <div className={`${style.inputBlock} ${isDropdownOpen && style.selectBlockOpen}`} onClick={() => {
+                    showDropdown()
+                }}>
+                    <input ref={selectRef}
+                           placeholder={placeholder}
+                           required={required && (block !== null || options.length > 0) || false}
+                           value={optionLabel}
+                           name={name}
+                           style={selectStyle}
+                           data-options-value={optionValue}
+                           autoComplete={'off'}
+                           onChange={(e) => {
+                               setOptionLabel(e.target.value);
+                               onChange(e);
+                           }}/>
+                    <button className={style.dropdownButton} type={'button'}>
+                        <img className={`${isShowDropDown && style.dropdownIconUp}`} src={dropdownIcon} alt=""/>
+                    </button>
+                    {
+                        isShowDropDown &&
+                        <div className={style.dropdown}>
+                            {
+                                block === null && options.length > 0 &&
+                                options.map((option, index) => {
+                                    return <button key={index}
+                                                   onClick={(e) => choseDropdownOptions(e, option)}
+                                    >{option.label}</button>
+                                })
+                            }
+                        </div>
+                    }
+                </div>
+                <p className={style.requiredFiledMessage}>Заполните обязательное поле</p>
             </div>
         </div>
     );
