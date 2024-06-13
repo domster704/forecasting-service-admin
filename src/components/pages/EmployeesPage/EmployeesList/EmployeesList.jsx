@@ -17,7 +17,7 @@ const EmployeesList = (props) => {
     React.useEffect(() => {
         const coefficient = filterStore.sortingDirection ? 1 : -1;
         const localEmployees = [...employeeStore.list];
-        console.log(localEmployees);
+
         localEmployees.sort((employee1, employee2) => {
             switch (filterStore.sorting) {
                 case 'id':
@@ -45,7 +45,7 @@ const EmployeesList = (props) => {
                     return 0;
             }
         });
-        console.log(localEmployees);
+
         setEmployees(localEmployees);
     }, [filterStore.sorting, filterStore.sortingDirection]);
 

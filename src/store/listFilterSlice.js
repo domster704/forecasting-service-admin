@@ -54,8 +54,13 @@ export const listFilterSlice = createSlice({
             state.employeesType = action.payload;
         },
         setSorting: (state, action) => {
+            if (state.sorting !== action.payload) {
+                state.sortingDirection = true;
+            } else {
+                state.sortingDirection = !state.sortingDirection;
+            }
+
             state.sorting = action.payload;
-            state.sortingDirection = !state.sortingDirection;
         },
     }
 });

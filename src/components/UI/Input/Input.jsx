@@ -11,11 +11,12 @@ const Input = ({
                    required = false,
                    type = "text",
                    name = "",
+                   defaultValue = "",
                    inputStyle = {},
                    onChange = (e) => {
                    },
                }) => {
-    const [value, setValue] = React.useState("");
+    const [value, setValue] = React.useState(defaultValue);
 
     const handleChange = (e) => {
         setValue(e.target.value);

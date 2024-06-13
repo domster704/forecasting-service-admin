@@ -4,7 +4,7 @@ import * as style from './ToolBar.module.css';
 import Input from "../../../UI/Input/Input";
 import search_icon from './img/search_icon.svg';
 import add_employee_icon from './img/add_employee.svg';
-import save_employee_icon from './img/save_employee.svg';
+import save_employee_icon from '../../../assets/img/save_employee.svg';
 import EmployeeEdit from "../EmployeeEdit/EmployeeEdit";
 
 const ToolBar = (props) => {
@@ -57,7 +57,8 @@ const ToolBar = (props) => {
             {isOpenSaveEmployeeBlock && <EmployeeEdit submitFormHandler={saveEmployeeHandler}
                                                       isClosable={true}
                                                       closeHandler={openSaveEmployeeBlockOnClick}
-                                                      buttonFormSubmitRef={buttonFormSubmitRef}/>}
+                                                      buttonFormSubmitRef={buttonFormSubmitRef}
+                                                      description="Добавление нового пользователя"/>}
         </>
     );
 }

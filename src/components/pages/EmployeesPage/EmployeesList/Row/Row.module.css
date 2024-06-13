@@ -21,6 +21,11 @@
     justify-self: end;
 }
 
+.actions button img {
+    width: 1.5em;
+    height: 1.5em;
+}
+
 .type,
 .organization {
     /*justify-self: center;*/

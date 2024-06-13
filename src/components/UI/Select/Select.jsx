@@ -25,11 +25,12 @@ const Select = ({
                     onChange = (e) => {
                     },
                     options = [],
+                    defaultValue = "",
                     block = null,
                 }) => {
     const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
     const [optionLabel, setOptionLabel] = React.useState("");
-    const [optionValue, setOptionValue] = React.useState("");
+    const [optionValue, setOptionValue] = React.useState(defaultValue);
 
     const selectRef = React.useRef(null);
     const data = useSelector(state => state.data);

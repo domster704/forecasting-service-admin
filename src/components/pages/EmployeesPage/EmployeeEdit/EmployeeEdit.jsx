@@ -25,7 +25,7 @@ class InputUserData {
 const field = [
     new InputUserData("Фамилия", "Фамилия", "last_name", true,),
     new InputUserData("Имя", "Имя", "first_name", true,),
-    new InputUserData("Отчество (при наличии)", "middle_name", "patronymic",),
+    new InputUserData("Отчество (при наличии)", "Отчество", "middle_name",),
     new InputUserData("@никнейм", "Telegram", "telegram_nickname", true,),
     new InputUserData("В формате @mos.ru", "Адрес эл. почты", "email", true, "email"),
     new InputUserData("+7-ххх-ххх-хх-хх", "Номер телефона", "phone", false, "tel"),
@@ -52,13 +52,14 @@ const field = [
  * @constructor
  */
 const EmployeeEdit = ({
-                          employee_id = null,
+                          employee = null,
                           isClosable = false,
                           closeHandler = (e) => {
                           },
                           submitFormHandler = (form) => {
                           },
                           buttonFormSubmitRef = React.useRef(null),
+                          description = ""
                       }) => {
     const formRef = React.useRef(null);
 
@@ -73,7 +74,7 @@ const EmployeeEdit = ({
     return (
         <div className={style.employeeEditContainer}>
             <div className={style.employeeEditHeader}>
-                <b>Добавление нового пользователя</b>
+                <b>{description}</b>
                 {isClosable &&
                     <button onClick={closeHandler}>
                         <img src={closeSvg} alt=""/>
@@ -89,7 +90,8 @@ const EmployeeEdit = ({
                                                              required={item.required}
                                                              type={item.type}
                                                              name={item.name}
-                                                             key={index}/>
+                                                             key={index}
+                                                             defaultValue={employee && employee[item.name]}/>
                             ||
                             <Select
                                 placeholder={item.placeholder}
@@ -97,7 +99,8 @@ const EmployeeEdit = ({
                                 required={item.required}
                                 name={item.name}
                                 options={item.options}
-                                key={index}/>
+                                key={index}
+                                defaultValue={employee && employee[item.name]}/>
                         )
                     })
                 }

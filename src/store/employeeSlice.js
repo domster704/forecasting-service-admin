@@ -7,11 +7,12 @@ const initialState = {
         last_name: 'Исупов',
         first_name: 'Григорий',
         middle_name: 'Сергеевич',
+        telegram_nickname: "@domster704",
         email: 'domster704@mail.com',
         phone: '89127458900',
         work_org_id: '1',
         position: 'Программист',
-        rights: [],
+        rights: ['admin'],
         type: 'admin'
     }],
     types: {
@@ -37,7 +38,7 @@ for (let i = 2; i < 100; i++) {
         phone: '89127458900',
         work_org_id: '1',
         position: 'Программист' + i,
-        rights: [],
+        rights: ['user'],
         type: 'user'
     })
 }
