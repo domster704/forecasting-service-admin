@@ -3,6 +3,8 @@ import {useDispatch, useSelector} from "react-redux";
 import * as style from './EmployeesList.module.css'
 import RowHeader from "./RowHeader/RowHeader";
 import Row from "./Row/Row";
+import ExcelButton from "../ExcelButton/ExcelButton";
+import Pagination from "./Pagination/Pagination";
 
 
 const EmployeesList = (props) => {
@@ -50,16 +52,22 @@ const EmployeesList = (props) => {
     }, [filterStore.sorting, filterStore.sortingDirection]);
 
     return (
-        <div className={style.list}>
-            <RowHeader/>
-            {
-                employees.map((employee, index) => {
-                    return <Row index={index + 1}
-                                employee={employee}
-                                key={index}/>
-                })
-            }
-        </div>
+        <>
+            <div className={style.list}>
+                <RowHeader/>
+                {
+                    employees.map((employee, index) => {
+                        return <Row index={index + 1}
+                                    employee={employee}
+                                    key={index}/>
+                    })
+                }
+            </div>
+            <div className={style.footer}>
+                <ExcelButton/>
+                <Pagination/>
+            </div>
+        </>
     );
 }
 

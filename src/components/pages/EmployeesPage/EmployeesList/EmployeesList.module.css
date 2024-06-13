@@ -4,3 +4,9 @@
     gap: 1em;
     margin-top: 2.625em;
 }
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2em;
+}

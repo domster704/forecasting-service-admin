@@ -36,3 +36,7 @@ button {
 input, textarea {
     cursor: text;
 }
+
+img, button {
+    user-select: none;
+}
