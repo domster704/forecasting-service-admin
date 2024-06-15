@@ -26,6 +26,7 @@ const Login = (props) => {
         e.target.reset();
 
         dispatch(setLogin(true))
+        // TODO: заменить это на что-то другое
         localStorage.setItem('isLogin', 'true');
         navigate(EMPLOYEES_PAGE_URL);
     }

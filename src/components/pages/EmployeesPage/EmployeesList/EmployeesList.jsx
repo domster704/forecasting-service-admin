@@ -4,7 +4,7 @@ import * as style from './EmployeesList.module.css'
 import RowHeader from "./RowHeader/RowHeader";
 import Row from "./Row/Row";
 import ExcelButton from "../ExcelButton/ExcelButton";
-import Pagination from "./Pagination/Pagination";
+import EmployeePagination from "./EmployeePagination/EmployeePagination";
 
 
 const EmployeesList = (props) => {
@@ -17,8 +17,12 @@ const EmployeesList = (props) => {
     const dispatch = useDispatch();
 
     React.useEffect(() => {
+        /**
+         * Тут происходит сортировка списка сотрудников
+         */
+
         const coefficient = filterStore.sortingDirection ? 1 : -1;
-        const localEmployees = [...employeeStore.list];
+        const localEmployees = [...employees];
 
         localEmployees.sort((employee1, employee2) => {
             switch (filterStore.sorting) {
@@ -51,6 +55,38 @@ const EmployeesList = (props) => {
         setEmployees(localEmployees);
     }, [filterStore.sorting, filterStore.sortingDirection]);
 
+    React.useEffect(() => {
+        /**
+         * Тут происходит фильтрация списка сотрудников
+         */
+
+        if (filterStore.employeesType.value === 'all') {
+            setEmployees(employeeStore.list);
+            return;
+        }
+
+        setEmployees(employeeStore.list.filter(elem => {
+            return elem.type === filterStore.employeesTypeList
+                .find(type => type.value === filterStore.employeesType.value).value;
+        }));
+
+    }, [filterStore.employeesType]);
+
+    React.useEffect(() => {
+        /**
+         * Тут происходит поиск сотрудника по id
+         */
+
+        if (filterStore.findUserValues === null) {
+            setEmployees(employeeStore.list);
+            return;
+        }
+
+        setEmployees(employeeStore.list.filter(elem => {
+            return elem.id.toString() === filterStore.findUserValues;
+        }));
+    }, [filterStore.findUserValues])
+
     return (
         <>
             <div className={style.list}>
@@ -65,7 +101,7 @@ const EmployeesList = (props) => {
             </div>
             <div className={style.footer}>
                 <ExcelButton/>
-                <Pagination/>
+                <EmployeePagination/>
             </div>
         </>
     );

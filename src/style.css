@@ -24,7 +24,7 @@ button, input, select, textarea {
     background: transparent;
 }
 
-/*Нужно для того, что при автозаполнении input не выделялся желтым цветом*/
+/*Нужно для того, что при автозаполнении от браузера input не выделялся желтым цветом*/
 input:-webkit-autofill {
     transition: all 9999999999s ease-in-out;
 }

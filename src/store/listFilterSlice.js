@@ -37,7 +37,8 @@ const initialState = {
     currentPage: 1,
 
     sorting: "id",
-    sortingDirection: true
+    sortingDirection: true,
+    findUserValues: null,
 };
 
 export const listFilterSlice = createSlice({
@@ -62,6 +63,9 @@ export const listFilterSlice = createSlice({
 
             state.sorting = action.payload;
         },
+        setFindUserValues: (state, action) => {
+            state.findUserValues = action.payload;
+        }
     }
 });
 
@@ -69,6 +73,7 @@ export const {
     setCurrentPage,
     setElementsOnPage,
     setEmployeesType,
-    setSorting
+    setSorting,
+    setFindUserValues
 } = listFilterSlice.actions;
 export default listFilterSlice.reducer;

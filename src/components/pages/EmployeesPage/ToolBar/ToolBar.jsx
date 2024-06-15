@@ -6,16 +6,23 @@ import search_icon from './img/search_icon.svg';
 import add_employee_icon from './img/add_employee.svg';
 import save_employee_icon from '../../../assets/img/save_employee.svg';
 import EmployeeEdit from "../EmployeeEdit/EmployeeEdit";
+import {setFindUserValues} from "../../../../store/listFilterSlice";
 
 const ToolBar = (props) => {
     const [isOpenSaveEmployeeBlock, setIsOpenSaveEmployeeBlock] = React.useState(false);
     const buttonFormSubmitRef = React.useRef(null);
 
     const employeeStore = useSelector(state => state.employee);
+    const filterStore = useSelector(state => state.filter);
     const dispatch = useDispatch();
 
     const findEmployee = (e, input) => {
-        console.log(input.value);
+        if (input.value.length === 0) {
+            dispatch(setFindUserValues(null));
+            return;
+        }
+
+        dispatch(setFindUserValues(input.value));
     }
 
     const openSaveEmployeeBlockOnClick = (e) => {

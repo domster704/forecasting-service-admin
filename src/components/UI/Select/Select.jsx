@@ -27,6 +27,7 @@ const Select = ({
                     options = [],
                     defaultValue = "",
                     block = null,
+                    invalid = false,
                 }) => {
     const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
     const [optionLabel, setOptionLabel] = React.useState("");
@@ -65,7 +66,8 @@ const Select = ({
                 <div className={`${style.inputBlock} ${isDropdownOpen && style.selectBlockOpen}`} onClick={() => {
                     showDropdown()
                 }}>
-                    <input ref={selectRef}
+                    <input className={`${invalid && style.invalid}`}
+                           ref={selectRef}
                            placeholder={placeholder}
                            required={required && (block !== null || options.length > 0) || false}
                            value={optionLabel}

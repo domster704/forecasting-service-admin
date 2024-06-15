@@ -15,6 +15,7 @@ const Input = ({
                    inputStyle = {},
                    onChange = (e) => {
                    },
+                   invalid = false,
                }) => {
     const [value, setValue] = React.useState(defaultValue);
 
@@ -36,7 +37,8 @@ const Input = ({
                 <div className={style.inputBlock} onClick={() => {
                     inputRef?.current?.focus();
                 }}>
-                    <input ref={inputRef}
+                    <input className={`${invalid && style.invalid}`}
+                           ref={inputRef}
                            placeholder={placeholder}
                            required={required}
                            value={value}

@@ -19,27 +19,13 @@ class InputUserData {
         this.required = required;
         this.type = type;
         this.options = options;
+        this.invalid = false;
+    }
+
+    setInvalid(invalid = true) {
+        this.invalid = invalid;
     }
 }
-
-const field = [
-    new InputUserData("Фамилия", "Фамилия", "last_name", true,),
-    new InputUserData("Имя", "Имя", "first_name", true,),
-    new InputUserData("Отчество (при наличии)", "Отчество", "middle_name",),
-    new InputUserData("@никнейм", "Telegram", "telegram_nickname", true,),
-    new InputUserData("В формате @mos.ru", "Адрес эл. почты", "email", true, "email"),
-    new InputUserData("+7-ххх-ххх-хх-хх", "Номер телефона", "phone", false, "tel"),
-    // Select
-    new InputUserData("Выберите организацию", "Место работы", "work_org_id", true, "select",
-        [
-            {value: "1", label: "ПАО Яндекс"},
-            {value: "2", label: "ТОО Асмас"}
-        ]),
-    new InputUserData("Укажите полную должность", "Должность", "position", true, "text"),
-    // Select
-    new InputUserData("Настройте права", "Права в системе", "rights", true, "select",
-        [{value: "1", label: "Администратор"}]),
-]
 
 /**
  *
@@ -63,12 +49,51 @@ const EmployeeEdit = ({
                       }) => {
     const formRef = React.useRef(null);
 
+    const [field, setField] = React.useState([
+        new InputUserData("Фамилия", "Фамилия", "last_name", true,),
+        new InputUserData("Имя", "Имя", "first_name", true,),
+        new InputUserData("Отчество (при наличии)", "Отчество", "middle_name",),
+        new InputUserData("@никнейм", "Telegram", "telegram_nickname", true,),
+        new InputUserData("В формате @mos.ru", "Адрес эл. почты", "email", true, "email"),
+        new InputUserData("+7-ххх-ххх-хх-хх", "Номер телефона", "phone", false, "tel"),
+        // Select
+        new InputUserData("Выберите организацию", "Место работы", "work_org_id", true, "select",
+            [
+                {value: "1", label: "ПАО Яндекс"},
+                {value: "2", label: "ТОО Асмас"}
+            ]),
+        new InputUserData("Укажите полную должность", "Должность", "position", true, "text"),
+        // Select
+        new InputUserData("Настройте права", "Права в системе", "rights", true, "select",
+            [{value: "1", label: "Администратор"}])
+    ]);
+
     const employeeStore = useSelector(state => state.employee);
     const dispatch = useDispatch();
 
     const onSubmit = (event) => {
         event.preventDefault();
         submitFormHandler(formRef.current)
+    }
+
+    const checkValidation = (e) => {
+        const inputs = Array.from(formRef.current.elements).filter(elem => elem.tagName.toLowerCase() === 'input');
+        let isInvalid = false;
+
+        let fieldLocal = [...field];
+        fieldLocal.forEach((field, index) => {
+            field.setInvalid(false);
+        });
+
+        for (let i in inputs) {
+            const input = inputs[i];
+            if (input.value === "" && input.required === true) {
+                fieldLocal[i].setInvalid();
+                isInvalid = true;
+            }
+        }
+
+        setField(fieldLocal);
     }
 
     return (
@@ -91,7 +116,8 @@ const EmployeeEdit = ({
                                                              type={item.type}
                                                              name={item.name}
                                                              key={index}
-                                                             defaultValue={employee && employee[item.name]}/>
+                                                             defaultValue={employee && employee[item.name] || ""}
+                                                             invalid={item.invalid}/>
                             ||
                             <Select
                                 placeholder={item.placeholder}
@@ -100,11 +126,14 @@ const EmployeeEdit = ({
                                 name={item.name}
                                 options={item.options}
                                 key={index}
-                                defaultValue={employee && employee[item.name]}/>
+                                defaultValue={employee && employee[item.name]}
+                                invalid={item.invalid}/>
                         )
                     })
                 }
-                <button ref={buttonFormSubmitRef} type="submit"></button>
+                <button ref={buttonFormSubmitRef}
+                        type="submit"
+                        onClick={checkValidation}></button>
             </form>
         </div>
     );
