@@ -7,54 +7,53 @@ import arrow_right from './img/arrow_right.svg'
 import {setCurrentPage} from "../../../../../store/listFilterSlice";
 
 const PaginationButton = ({
-                              children, style, onClickCallback = (e) => {
-    }
+                              children,
+                              buttonStyle,
+                              onClickCallback = (e) => {
+                              },
+                              isActive = false
                           }) => {
-    const filterStore = useSelector(state => state.filter);
-    const employeeStore = useSelector(state => state.employee);
-    const dispatch = useDispatch();
-
     const onClick = (e) => {
-        onClickCallback()
-
-        if (isNaN(+children.toString())) {
-            return;
-        }
-
-        dispatch(setCurrentPage(parseInt(children)))
+        onClickCallback(e, parseInt(children));
     }
 
-    return (<button style={style}
+    return (<button className={`${isActive && style.active}`}
+                    style={buttonStyle}
                     onClick={onClick}>{children}</button>)
 }
 
 const EmployeePagination = (props) => {
-    const [maxPage, setMaxPage] = React.useState(4);
-
     const employeeStore = useSelector(state => state.employee);
     const filterStore = useSelector(state => state.filter);
+
+    const [maxPage, setMaxPage] = React.useState(filterStore.baseMaxPageNumberInPagination);
     const dispatch = useDispatch();
 
     const arrowClick = (e, arrowDirection) => {
-        if (arrowDirection !== null) {
-            switch (arrowDirection) {
-                case 'left': {
-                    if (filterStore.currentPage <= 1) {
-                        return;
-                    }
-                    dispatch(setCurrentPage(filterStore.currentPage - 1))
+        switch (arrowDirection) {
+            case 'left': {
+                if (filterStore.currentPage <= 1) {
                     return;
                 }
-                case 'right': {
-                    if (filterStore.currentPage >= Math.ceil(employeeStore.list.length / filterStore.elementsOnPage.value) - maxPage - 1) {
-                        return;
-                    }
-                    dispatch(setCurrentPage(filterStore.currentPage + 1))
+                dispatch(setCurrentPage(filterStore.currentPage - 1))
+                return;
+            }
+            case 'right': {
+                if (filterStore.currentPage >= Math.ceil(employeeStore.list.length / filterStore.elementsOnPage.value)) {
                     return;
                 }
+                dispatch(setCurrentPage(filterStore.currentPage + 1))
+                return;
             }
         }
     }
+
+    const onClick = (e, page) => {
+        dispatch(setCurrentPage(parseInt(page)))
+    }
+
+    const pageDelta = filterStore.currentPage - maxPage >= 0 ? filterStore.currentPage - maxPage + 1 : 0;
+    const pageCount = Math.ceil(employeeStore.list.length / filterStore.elementsOnPage.value);
 
     return (<div className={style.pagination}>
         <PaginationButton onClickCallback={e => arrowClick(e, 'left')}>
@@ -63,19 +62,28 @@ const EmployeePagination = (props) => {
         </PaginationButton>
 
         {[...Array(Math.ceil(employeeStore.list.length / filterStore.elementsOnPage.value))].map((elem, index) => {
-            const pageCount = Math.ceil(employeeStore.list.length / filterStore.elementsOnPage.value);
-            const maxVisiblePage = maxPage + filterStore.currentPage - 1;
-            const isDoNotShowPointers = filterStore.currentPage + maxPage + 1 > pageCount - 1;
+            const isActive = filterStore.currentPage - 1 === index;
+            const isLastPages = filterStore.currentPage >= pageCount - 3;
+            const maxLeftIndex = pageCount - maxPage - 2;
 
-            if (index === maxVisiblePage && !isDoNotShowPointers) {
+            // Сдвиг номеров пагинации
+            console.log(index, maxPage, pageCount, maxLeftIndex, isLastPages);
+
+            if (index === maxPage + pageDelta && filterStore.currentPage + 1 < pageCount - 2) {
                 return <PaginationButton key={index}>...</PaginationButton>
-            } else if (isDoNotShowPointers && index >= maxVisiblePage) {
-                return <PaginationButton key={index}>{index + 1}</PaginationButton>
-            } else if (index >= maxVisiblePage && index + 1 < pageCount || index < filterStore.currentPage - 1) {
+            }
+            if (filterStore.currentPage + 1 < pageCount - 1 &&
+                index >= maxPage + (isLastPages ? 0 : pageDelta) &&
+                (!isLastPages ? index < pageCount - 1 : index < maxLeftIndex)) {
+                return null;
+            }
+            if (index < (isLastPages ? maxLeftIndex : pageDelta)) {
                 return null;
             }
 
-            return <PaginationButton key={index}>{index + 1}</PaginationButton>
+            return <PaginationButton key={index}
+                                     isActive={isActive}
+                                     onClickCallback={onClick}>{index + 1}</PaginationButton>
         })}
 
         <PaginationButton onClickCallback={e => arrowClick(e, 'right')}>

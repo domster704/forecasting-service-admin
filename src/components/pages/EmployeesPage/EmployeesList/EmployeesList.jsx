@@ -87,6 +87,17 @@ const EmployeesList = (props) => {
         }));
     }, [filterStore.findUserValues])
 
+    React.useEffect(() => {
+        /**
+         * Отображение списка сотрудников по страницам на основной текущей страницы
+         */
+
+        setEmployees(employeeStore.list.slice(
+            (filterStore.currentPage - 1) * filterStore.elementsOnPage.label,
+            filterStore.currentPage * filterStore.elementsOnPage.label
+        ));
+    }, [filterStore.currentPage]);
+
     return (
         <>
             <div className={style.list}>

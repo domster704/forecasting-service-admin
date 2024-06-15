@@ -27,7 +27,7 @@ const initialState = {
     }
 };
 
-for (let i = 2; i < 100; i++) {
+for (let i = 2; i < 130; i++) {
     initialState.list.push({
         index: i,
         id: i,

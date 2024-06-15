@@ -34,6 +34,7 @@ const initialState = {
 
     employeesType: LIST_OPTIONS_EMPLOYEE_TYPES[0],
     elementsOnPage: LIST_OPTIONS_PAGE_ELEMENTS[0],
+    baseMaxPageNumberInPagination: 4,
     currentPage: 1,
 
     sorting: "id",
