@@ -5,6 +5,7 @@ import editSvg from './img/edit.svg';
 import saveSvg from '../../../../assets/img/save_employee.svg';
 import deleteSvg from './img/delete.svg';
 import EmployeeEdit from "../../EmployeeEdit/EmployeeEdit";
+import {deleteEmployee} from "../../../../../store/employeeSlice";
 
 const Row = ({
                  index,
@@ -20,6 +21,10 @@ const Row = ({
         setIsEdit(!isEdit);
     }
 
+    const onClickDelete = (e) => {
+        dispatch(deleteEmployee(employee));
+    }
+
     return (
         <>
             <div className={style.row}>
@@ -32,7 +37,7 @@ const Row = ({
                     <button onClick={onClickEdit}>
                         <img src={isEdit ? saveSvg : editSvg} alt=""/>
                     </button>
-                    <button>
+                    <button onClick={onClickDelete}>
                         <img src={deleteSvg} alt=""/>
                     </button>
                 </div>

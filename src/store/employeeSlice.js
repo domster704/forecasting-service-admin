@@ -49,9 +49,15 @@ export const employeeSlice = createSlice({
     reducers: {
         setIsSavedEmployee: (state, action) => {
             state.isSavedEmployee = action.payload
+        },
+        deleteEmployee: (state, action) => {
+            state.list = state.list.filter(item => item.id !== action.payload.id);
         }
     }
 });
 
-export const {setIsSavedEmployee} = employeeSlice.actions;
+export const {
+    setIsSavedEmployee,
+    deleteEmployee
+} = employeeSlice.actions;
 export default employeeSlice.reducer;

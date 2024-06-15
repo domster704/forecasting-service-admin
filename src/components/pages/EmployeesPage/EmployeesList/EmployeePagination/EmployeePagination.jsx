@@ -52,6 +52,7 @@ const EmployeePagination = (props) => {
         dispatch(setCurrentPage(parseInt(page)))
     }
 
+    // Сдвиг номеров пагинации
     const pageDelta = filterStore.currentPage - maxPage >= 0 ? filterStore.currentPage - maxPage + 1 : 0;
     const pageCount = Math.ceil(employeeStore.list.length / filterStore.elementsOnPage.value);
 
@@ -66,8 +67,6 @@ const EmployeePagination = (props) => {
             const isLastPages = filterStore.currentPage >= pageCount - 3;
             const maxLeftIndex = pageCount - maxPage - 2;
 
-            // Сдвиг номеров пагинации
-            console.log(index, maxPage, pageCount, maxLeftIndex, isLastPages);
 
             if (index === maxPage + pageDelta && filterStore.currentPage + 1 < pageCount - 2) {
                 return <PaginationButton key={index}>...</PaginationButton>
