@@ -63,9 +63,10 @@ const Select = ({
                 </label>
             }
             <div>
-                <div className={`${style.inputBlock} ${isDropdownOpen && style.selectBlockOpen}`} onClick={() => {
-                    showDropdown()
-                }}>
+                <div className={`${style.inputBlock} ${style.selectBlock} ${isDropdownOpen && style.selectBlockOpen}`}
+                     onClick={() => {
+                         block === null && showDropdown();
+                     }}>
                     <input className={`${invalid && style.invalid}`}
                            ref={selectRef}
                            placeholder={placeholder}
@@ -79,7 +80,9 @@ const Select = ({
                                setOptionLabel(e.target.value);
                                onChange(e);
                            }}/>
-                    <button className={style.dropdownButton} type={'button'}>
+                    <button className={style.dropdownButton} type={'button'} onClick={e => {
+                        block !== null && showDropdown()
+                    }}>
                         <img className={`${isShowDropDown && style.dropdownIconUp}`} src={dropdownIcon} alt=""/>
                     </button>
                     {
@@ -92,6 +95,8 @@ const Select = ({
                                                    onClick={(e) => choseDropdownOptions(e, option)}
                                     >{option.label}</button>
                                 })
+                                ||
+                                block
                             }
                         </div>
                     }

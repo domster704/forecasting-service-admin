@@ -5,6 +5,7 @@ import Input from "../../../UI/Input/Input";
 import Select from "../../../UI/Select/Select";
 
 import closeSvg from "./img/close.svg";
+import RightsBlock from "./RightsBlock/RightsBlock";
 
 class InputUserData {
     constructor(placeholder,
@@ -12,7 +13,8 @@ class InputUserData {
                 name,
                 required = false,
                 type = 'text',
-                options = []) {
+                options = [],
+                block = null,) {
         this.placeholder = placeholder;
         this.label = label;
         this.name = name;
@@ -20,6 +22,7 @@ class InputUserData {
         this.type = type;
         this.options = options;
         this.invalid = false;
+        this.block = block;
     }
 
     setInvalid(invalid = true) {
@@ -65,7 +68,7 @@ const EmployeeEdit = ({
         new InputUserData("Укажите полную должность", "Должность", "position", true, "text"),
         // Select
         new InputUserData("Настройте права", "Права в системе", "rights", true, "select",
-            [{value: "1", label: "Администратор"}])
+            [{value: "1", label: "Администратор"}], <RightsBlock/>)
     ]);
 
     const employeeStore = useSelector(state => state.employee);
@@ -127,7 +130,8 @@ const EmployeeEdit = ({
                                 options={item.options}
                                 key={index}
                                 defaultValue={employee && employee[item.name]}
-                                invalid={item.invalid}/>
+                                invalid={item.invalid}
+                                block={item.block}/>
                         )
                     })
                 }

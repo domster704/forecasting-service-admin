@@ -28,6 +28,11 @@
     overflow: hidden;
 }
 
+.selectBlock,
+.selectBlock input {
+    cursor: pointer;
+}
+
 .inputBlock input {
     background: white;
     font-weight: 400;
