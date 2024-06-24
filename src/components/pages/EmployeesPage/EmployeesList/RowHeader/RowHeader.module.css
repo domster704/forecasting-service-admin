@@ -20,3 +20,14 @@
     align-items: center;
     gap: 0.5em;
 }
+
+.organizationField,
+.typeField{
+    justify-content: center;
+}
+
+@media screen and (max-width: 551px) {
+    .header {
+        display: none;
+    }
+}
